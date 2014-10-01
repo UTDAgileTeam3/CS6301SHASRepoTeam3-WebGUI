@@ -17,7 +17,7 @@
 <script type="text/javascript">
 function logout()
 {
-	alert("hi..");
+
 	<%request.getSession().removeAttribute("uname");%>
 	<%request.setAttribute("errorMessage","You have logged out successfully!");%>
 	window.location("./login.jsp");
