@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.lang.*" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.sql.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,18 +12,22 @@
 </head>
 <body>
 <%@ include file="./header.jsp" %>
+<h3>Welcome ${uname} to SHAS!</h3>
 
 <%
- String uname = (String) request.getAttribute("uname");
-String sessionUname = (String)request.getSession().getAttribute("uname");
-/* if (request.getSession().getAttribute("uname") == null) {
-	 
-    response.sendRedirect("login.jsp");
-} */
+Properties properties = new Properties();
+properties.load(getServletContext().getResourceAsStream("/WEB-INF/database.properties"));
+System.out.println(properties);
+String url = properties.getProperty("jdbc.url");
+String driver = properties.getProperty("jdbc.driver");
+String username = properties.getProperty("jdbc.username");
+String password = properties.getProperty("jdbc.password");
 
- %>
+Class.forName(driver);
+Connection conn = DriverManager.getConnection(url, username, password);
 
-<h3>Welcome <% if (uname != null) {%>  <%=uname%><%} %> to SHAS!</h3>
+%>
+<h3>${url} ${driver} ${username} ${password}</h3>
 <script type="text/javascript">alert(sessionUname);</script>
 </body>
 </html>
