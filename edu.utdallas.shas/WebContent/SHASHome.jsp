@@ -7,9 +7,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SHAS Home</title>
 <script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
-<%@ include file="./header.jsp" %>
 </head>
 <body>
+<%@ include file="./header.jsp" %>
+
 <%
  String uname = (String) request.getAttribute("uname");
 String sessionUname = (String)request.getSession().getAttribute("uname");
