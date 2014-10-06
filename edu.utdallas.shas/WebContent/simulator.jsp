@@ -21,6 +21,16 @@
      	</th>
 	</tr>
 </table>
+<table>
+	<tr>
+		<th>Sprinklers : </th>
+		<th><select name="sprinklers" id="sprinklers" >
+     			<option id="sprinklersOn" value="On"> On </option>
+     			<option id="sprinklersOff" value="Off"> Off </option>
+     		</select>
+     	</th>
+	</tr>
+</table>
 </body>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -31,7 +41,9 @@ $(document).ready(function() {
 		  //alert(securityAlarmValue);
 		  if($.trim(securityAlarmValue) === "Yes")
 			  <%request.setAttribute("securityBreached","yes");%>
-			  window.location = "./SHASHome.jsp";
+			  alert('Security Breached! The system will call the police after 90 seconds.');
+			  setTimeout("alert('90 seconds has passed, calling police now!')" , 90000);
+			  //window.location = "./SHASHome.jsp";
 		});
 });
 	
