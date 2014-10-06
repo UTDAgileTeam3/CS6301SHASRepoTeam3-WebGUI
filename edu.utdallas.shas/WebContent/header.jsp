@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <table align="right">
 	<tr>
-
+		<td> <a href="SHASHome.jsp"><img title="Home" src="./images/home.png"/></a></td>
 		<td> <a href="simulator.jsp"><img border="0px" title="set values here" alt="settings" src="./images/settings.png"/></a></td>
 		<td><a href="${pageContext.request.contextPath}/logout"><img border="0px" title="Logout" alt="Logout" src="./images/logout.png"/></a></td>
 	</tr>
