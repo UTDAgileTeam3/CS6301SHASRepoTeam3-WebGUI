@@ -8,6 +8,7 @@
 <title>SHAS Simulator</title>
 </head>
 <body>
+<%@ include file="./header.jsp" %>
 <h3>Adjust all the appliances values here!</h3>
 
 <table>
