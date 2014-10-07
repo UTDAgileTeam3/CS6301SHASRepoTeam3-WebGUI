@@ -15,7 +15,7 @@
 <h3>Welcome ${uname} to SHAS!</h3>
 
 <%
-Properties properties = new Properties();
+/*Properties properties = new Properties();
 properties.load(getServletContext().getResourceAsStream("/WEB-INF/database.properties"));
 System.out.println(properties);
 String url = properties.getProperty("jdbc.url");
@@ -25,7 +25,7 @@ String password = properties.getProperty("jdbc.password");
 
 Class.forName(driver);
 Connection conn = DriverManager.getConnection(url, username, password);
-
+*/
 %>
 
 <%
@@ -40,6 +40,6 @@ String sessionUname = (String)request.getSession().getAttribute("uname");
 
  %>
 <h3>${url} ${driver} ${username} ${password}</h3>
-<script type="text/javascript">alert("hi..");alert("security:"+<%=scurityBreached%>);</script>
+
 </body>
 </html>
