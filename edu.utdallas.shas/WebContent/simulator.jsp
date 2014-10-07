@@ -20,17 +20,9 @@
      		</select>
      	</th>
 	</tr>
+	<tr><%@ include file="./sprinkler.jsp" %></tr>
 </table>
-<table>
-	<tr>
-		<th>Sprinklers : </th>
-		<th><select name="sprinklers" id="sprinklers" >
-     			<option id="sprinklersOn" value="On"> On </option>
-     			<option id="sprinklersOff" value="Off"> Off </option>
-     		</select>
-     	</th>
-	</tr>
-</table>
+
 </body>
 <script type="text/javascript">
 $(document).ready(function() {

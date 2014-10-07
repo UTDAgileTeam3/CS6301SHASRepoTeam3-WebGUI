@@ -8,11 +8,12 @@
 <title>SHAS Login</title>
 </head>
 <body>
-
+	<div style="width:100%; height:150px; background-image:url('./images/topdiv2.png');text-align: center;text-decoration: underline; color: #ffffff; font-size: 40px">Smart Home Automation System</div><BR/><BR/><BR/>
+	<center>
 	<form action="./HomePageServlet" method ="post" >
 	<fieldset style = "width: 400px">
-        <legend style="font-size: 18px; font-weight: bold; color: maroon; font-family: Georgia, serif;">
- 		Welcome to SHAS</legend>                            
+        <legend style="font-size: 18px; font-weight: bold; color: #2000ff; font-family: Georgia, serif;">
+ 		Welcome </legend>                            
 	<table align="left">
 		<tr>
 		<TH>Enter User Name: </TH>
@@ -39,6 +40,6 @@
 	</table>
 	</fieldset>
 	</form>
-
+    </center>
 </body>
 </html>

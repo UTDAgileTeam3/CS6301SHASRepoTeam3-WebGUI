@@ -27,7 +27,19 @@ Class.forName(driver);
 Connection conn = DriverManager.getConnection(url, username, password);
 
 %>
+
+<%
+ String uname = (String) request.getAttribute("uname");
+String scurityBreached = (String) request.getAttribute("securityBreached");
+
+String sessionUname = (String)request.getSession().getAttribute("uname");
+/* if (request.getSession().getAttribute("uname") == null) {
+	 
+    response.sendRedirect("login.jsp");
+} */
+
+ %>
 <h3>${url} ${driver} ${username} ${password}</h3>
-<script type="text/javascript">alert(sessionUname);</script>
+<script type="text/javascript">alert("hi..");alert("security:"+<%=scurityBreached%>);</script>
 </body>
 </html>
