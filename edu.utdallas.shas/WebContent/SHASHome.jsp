@@ -40,6 +40,5 @@ String sessionUname = (String)request.getSession().getAttribute("uname");
 
  %>
 <h3>${url} ${driver} ${username} ${password}</h3>
-
 </body>
 </html>
