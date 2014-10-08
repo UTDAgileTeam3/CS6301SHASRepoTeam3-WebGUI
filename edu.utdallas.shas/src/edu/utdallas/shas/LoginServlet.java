@@ -37,13 +37,12 @@ public class LoginServlet extends HttpServlet{
 		String pwd = null;
 		uname = req.getParameter("uname");
 		pwd= req.getParameter("password");
-		req.getSession().setAttribute("uname", uname);
+		
 		
 		try {
 			if(uname.equals("admin") && pwd.equals("SHAS"))
 			{
-				
-				req.setAttribute("uname", uname);
+				req.getSession().setAttribute("uname", uname);
 
 				RequestDispatcher rd = req.getRequestDispatcher("./SHASHome.jsp");
 				rd.forward(req, resp);
