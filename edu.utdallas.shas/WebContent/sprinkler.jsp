@@ -6,12 +6,12 @@
             $("#sprinkler tr:not(.odd)").hide();
             $("#sprinkler tr:first-child").show();
             
-            $("#arrow").click(function(){
-
-                ($(this)).closest("tr").next("tr").toggle();
-                ($(this)).closest("tr").find(".arrow").toggleClass("up");
-            });
-            
+            for (var i = 1; i <= 4; i++) {
+                $("#arrow" + i).click(function(){
+                    ($(this)).closest("tr").next("tr").toggle();
+                    ($(this)).closest("tr").find(".arrow").toggleClass("up");
+                });	
+            }            
         });
         
     </script> 
@@ -29,14 +29,14 @@ String sprinkler4 = (String) request.getSession().getAttribute("sprinklerzone4se
             <th></th>
         </tr>
         <tr>
-            <td class="tog"><h4>Sprinkler Zone1</h4></td>
+            <td><h4>Sprinkler Zone1</h4></td>
             <td><select name="sprinklerzone1select" id="sprinklerzone1select" >
      			<option id="sprinklerzone1off" value="off"> OFF </option>
      			<option id="sprinklerzone1on" value="on" <%if(sprinkler1!=null && sprinkler1.equalsIgnoreCase("on")){%> selected="selected" <%}%>> ON </option>
      			
      		</select>
      		</td>
-            <td class="tog"><div id="arrow" class="arrow"></div></td>
+            <td><div id="arrow1" class="arrow"></div></td>
         </tr>
         <tr>
             <td colspan="5">
@@ -57,7 +57,7 @@ String sprinkler4 = (String) request.getSession().getAttribute("sprinklerzone4se
      			
      		</select>
      		</td>
-          	<td><div id="arrow" class="arrow"></div></td>
+          	<td><div id="arrow2" class="arrow"></div></td>
         </tr>
         <tr>
             <td colspan="5">
@@ -78,7 +78,7 @@ String sprinkler4 = (String) request.getSession().getAttribute("sprinklerzone4se
      			
      		</select>
      		</td>
-            <td><div id="arrow" class="arrow"></div></td>
+            <td><div id="arrow3" class="arrow"></div></td>
         </tr>
         <tr>
             <td colspan="5">
@@ -99,7 +99,7 @@ String sprinkler4 = (String) request.getSession().getAttribute("sprinklerzone4se
      			
      		</select>
      		</td>
-            <td><div id="arrow" class="arrow"></div></td>
+            <td><div id="arrow4" class="arrow"></div></td>
         </tr>
         <tr>
             <td colspan="5">
