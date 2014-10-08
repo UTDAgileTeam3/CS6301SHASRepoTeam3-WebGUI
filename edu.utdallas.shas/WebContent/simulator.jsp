@@ -9,7 +9,7 @@
         #sprinkler h4 { margin:0px; padding:0px;}
         #sprinkler img { float:right;}
         #sprinkler ul { margin:10px 0 10px 40px; padding:0px;}
-        #sprinkler th { background:#7CB8E2 url(header_bkg.png) repeat-x scroll center left; color:#fff; padding:7px 15px; text-align:left;}
+        #sprinkler th { background:#7CB8E2 url(./images/header_bkg.png) repeat-x scroll center left; color:#fff; padding:7px 15px; text-align:left;}
         #sprinkler td { background:#C7DDEE none repeat-x scroll center left; color:#000; padding:7px 15px; }
         #sprinkler tr.odd td { background:#fff url(./images/row_bkg.png) repeat-x scroll center left; cursor:pointer; }
         #sprinkler div.arrow { background:transparent url(./images/arrows.png) no-repeat scroll 0px -16px; width:16px; height:16px; display:block;}
