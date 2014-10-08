@@ -11,13 +11,12 @@
 
 <%
 
- String uname = (String) request.getAttribute("uname");
-String scurityBreached = (String) request.getAttribute("securityBreached");
-String sprinkler1 = (String) request.getAttribute("sprinklerzone1select");
-String sprinkler2 = (String) request.getAttribute("sprinklerzone2select");
-String sprinkler3 = (String) request.getAttribute("sprinklerzone3select");
-String sprinkler4 = (String) request.getAttribute("sprinklerzone4select");
-String sessionUname = (String)request.getSession().getAttribute("uname");
+String uname = (String) request.getSession().getAttribute("uname");
+boolean securityBreached = (Boolean) request.getSession().getAttribute("securityBreached");
+String sprinkler1 = (String) request.getSession().getAttribute("sprinklerzone1select");
+String sprinkler2 = (String) request.getSession().getAttribute("sprinklerzone2select");
+String sprinkler3 = (String) request.getSession().getAttribute("sprinklerzone3select");
+String sprinkler4 = (String) request.getSession().getAttribute("sprinklerzone4select");
 /* if (request.getSession().getAttribute("uname") == null) {
 	 
     response.sendRedirect("login.jsp");

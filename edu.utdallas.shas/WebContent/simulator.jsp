@@ -23,7 +23,7 @@
 <%@ include file="./header.jsp" %>
 <h3>Adjust all the appliances values here!</h3>
 
-<form action="./simulator.jsp" method="POST" onsubmit="">
+<form action="./SHASControllerServlet" method="post">
 <table>
 	<tr>
 		<th>Security Breached : </th>
@@ -35,7 +35,7 @@
 	</tr>
 	<tr><%@ include file="./sprinkler.jsp" %></tr>
 </table>
-<input type="submit" value="Update appliances">
+<input type="submit" id="submitsprinkler" value="Submit">
 </form>
 
 <script type="text/javascript">

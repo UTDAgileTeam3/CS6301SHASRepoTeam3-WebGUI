@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class LoginServlet extends HttpServlet{
 	PrintWriter out = null;
@@ -42,8 +43,10 @@ public class LoginServlet extends HttpServlet{
 		try {
 			if(uname.equals("admin") && pwd.equals("SHAS"))
 			{
-				req.getSession().setAttribute("uname", uname);
-
+				HttpSession sess = req.getSession();
+				sess.setAttribute("uname", uname);
+				sess.setAttribute("securityBreached", false);
+				
 				RequestDispatcher rd = req.getRequestDispatcher("./SHASHome.jsp");
 				rd.forward(req, resp);
 			}

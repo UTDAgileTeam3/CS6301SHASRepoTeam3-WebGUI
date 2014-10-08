@@ -15,7 +15,7 @@
         });
         
     </script> 
-<center> 
+<center>
 <table id="sprinkler" >
         <tr>
             <th><h3>Sprinkler Zone</h3></th>
@@ -106,5 +106,5 @@
                  </ul>  
             </td>
         </tr>
-        <tr><td align="right" colspan="3"><input type="submit" id="submitsprinkler" value="Submit"> </td></tr>
   </table>
+  </center> 
