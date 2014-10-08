@@ -24,7 +24,7 @@
 <h3>Adjust all the appliances values here!</h3>
 
 <% boolean securityBreached = (Boolean) request.getSession().getAttribute("securityBreached"); %>
-<form action="./SHASControllerServlet" method="post">
+<form action="./SHASControllerServlet" method="post" onsubmit="return checkSecurity()">
 <table>
 	<tr>
 		<th>Security Breached : </th>
@@ -40,20 +40,18 @@
 </form>
 
 <script type="text/javascript">
-$(document).ready(function() {
-	
-		//alert("security breached...");
-	$('#securityAlarm').change(function() {
-		  var securityAlarmValue = $(this).find(":selected").text();
-		  //alert(securityAlarmValue);
-		  if($.trim(securityAlarmValue) === "Yes")
-			  <%request.setAttribute("securityBreached","yes");%>
-			  alert('Security Breached! The system will call the police after 90 seconds.');
-			  setTimeout("alert('90 seconds has passed, calling police now!')" , 90000);
-			  //window.location = "./SHASHome.jsp";
-		});
-});
-	
+function checkSecurity() {
+	<% if (!securityBreached) { %>
+	if ($.trim($('#securityAlarm').find(":selected").text()) === "Yes") {
+		return confirm('You are about to activate the security alarm. If it is not cancelled within 90 seconds, the system will notify the police. Are you sure you wish to continue?');
+	}
+	else {
+		return true;
+	}
+	<% } else { %>
+	return true;
+	<% } %>
+}	
 </script>
 </body>
 </html>
