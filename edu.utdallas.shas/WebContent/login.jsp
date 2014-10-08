@@ -6,13 +6,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SHAS Login</title>
+
 </head>
 <body>
 	<div style="width:100%; height:150px; background-image:url('./images/topdiv2.png');text-align: center;text-decoration: underline; color: #ffffff; font-size: 40px">Smart Home Automation System</div><BR/><BR/><BR/>
 	<center>
 	<form action="./HomePageServlet" method ="post" >
 	<fieldset style = "width: 400px">
-        <legend style="font-size: 18px; font-weight: bold; color: #2000ff; font-family: Georgia, serif;">
+        <legend style="font-size: 18px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
  		Welcome </legend>                            
 	<table align="left">
 		<tr>

@@ -26,16 +26,21 @@
             $("#sprinkler tr:not(.odd)").hide();
             $("#sprinkler tr:first-child").show();
             
-            $("#sprinkler tr.odd").click(function(){
-                $(this).next("tr").toggle();
-                $(this).find(".arrow").toggleClass("up");
+            $("#arrow").click(function(){
+
+                ($(this)).closest("tr").next("tr").toggle();
+                ($(this)).closest("tr").find(".arrow").toggleClass("up");
             });
             
         });
+        
     </script> 
        
 </head>
 <body>
+<center>
+<form action="./SHASControllerServlet" method ="post" >
+ 
 <table id="sprinkler" >
         <tr>
             <th><h3>Sprinkler Zone</h3></th>
@@ -44,12 +49,13 @@
         </tr>
         <tr>
             <td class="tog"><h4>Sprinkler Zone1</h4></td>
-            <td><select name="Sprinkler" id="sprinklerzone1" >
-     			<option id="sprinklerzone1on" value="on"> ON </option>
+            <td><select name="sprinklerzone1select" id="sprinklerzone1select" >
      			<option id="sprinklerzone1off" value="off"> OFF </option>
+     			<option id="sprinklerzone1on" value="on"> ON </option>
+     			
      		</select>
      		</td>
-            <td class="tog"><div class="arrow"></div></td>
+            <td class="tog"><div id="arrow" class="arrow"></div></td>
         </tr>
         <tr>
             <td colspan="5">
@@ -64,19 +70,20 @@
         </tr>
         <tr>
             <td><h4>Sprinkler Zone2</h4></td>
-            <td><select name="Sprinkler" id="sprinklerzone2" >
-     			<option id="sprinklerzone2on" value="on"> ON </option>
+            <td><select name="sprinklerzone2select" id="sprinklerzone2select" >
      			<option id="sprinklerzone2off" value="off"> OFF </option>
+     			<option id="sprinklerzone2on" value="on"> ON </option>
+     			
      		</select>
      		</td>
-          	<td><div class="arrow"></div></td>
+          	<td><div id="arrow" class="arrow"></div></td>
         </tr>
         <tr>
             <td colspan="5">
                
                 <h4>Additional information</h4>
                 <ul>
-                    <li>This is zone 1 covering top left zone of garden</li>
+                    <li>This is zone 2 covering top right zone of garden</li>
                     <li><a href="#">Set the Schedule</a></li>
                     
                  </ul> 
@@ -84,19 +91,20 @@
         </tr>
         <tr>
             <td><h4>Sprinkler Zone3</h4></td>
-            <td><select name="Sprinkler" id="sprinklerzone3" >
-     			<option id="sprinklerzone3on" value="on"> ON </option>
+            <td><select name="sprinklerzone3select" id="sprinklerzone3select" onclick="doUnbind()">
      			<option id="sprinklerzone3off" value="off"> OFF </option>
+     			<option id="sprinklerzone3on" value="on"> ON </option>
+     			
      		</select>
      		</td>
-            <td><div class="arrow"></div></td>
+            <td><div id="arrow" class="arrow"></div></td>
         </tr>
         <tr>
             <td colspan="5">
                
                 <h4>Additional information</h4>
                  <ul>
-                    <li>This is zone 1 covering top left zone of garden</li>
+                    <li>This is zone 3 covering bottom left zone of garden</li>
                     <li><a href="#">Set the Schedule</a></li>
                     
                  </ul>
@@ -104,25 +112,30 @@
         </tr>
         <tr>
             <td><h4>Sprinkler Zone4</h4></td>
-            <td><select name="Sprinkler" id="sprinklerzone4" >
-     			<option id="sprinklerzone4on" value="on"> ON </option>
+            <td><select name="sprinklerzone4select" id="sprinklerzone4select" >
      			<option id="sprinklerzone4off" value="off"> OFF </option>
+     			<option id="sprinklerzone4on" value="on"> ON </option>
+     			
      		</select>
      		</td>
-            <td><div class="arrow"></div></td>
+            <td><div id="arrow" class="arrow"></div></td>
         </tr>
         <tr>
             <td colspan="5">
                
                 <h4>Additional information</h4>
                  <ul>
-                    <li>This is zone 1 covering top left zone of garden</li>
+                    <li>This is zone 4 covering bottom right zone of garden</li>
                     <li><a href="#">Set the Schedule</a></li>
                     
                  </ul>  
             </td>
         </tr>
+        <tr><td align="right" colspan="3"><input type="submit" id="submitsprinkler" value="Submit"> </td></tr>
   </table>
 
+</form>
+</center>
 </body>
+
 </html>

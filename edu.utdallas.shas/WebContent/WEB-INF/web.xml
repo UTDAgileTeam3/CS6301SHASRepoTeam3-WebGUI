@@ -12,4 +12,12 @@
     <servlet-name>FirstServlet</servlet-name>
     <url-pattern>/HomePageServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>SHASControllerServlet</servlet-name>
+    <servlet-class>edu.utdallas.shas.SHASControllerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SHASControllerServlet</servlet-name>
+    <url-pattern>/SHASControllerServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
