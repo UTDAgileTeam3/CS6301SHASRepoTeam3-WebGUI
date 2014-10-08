@@ -1,6 +1,7 @@
 package edu.utdallas.shas;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -27,7 +28,11 @@ public class SHASControllerServlet extends HttpServlet{
      //String sprinklerzone1 = req.getParameter("sprinklerzone1");
 		HttpSession sess = req.getSession();
 		if (req.getParameter("securityAlarm").equalsIgnoreCase("Yes")) {
-			sess.setAttribute("securityBreached", true);
+			Boolean b = (Boolean)sess.getAttribute("securityBreached");
+			if (b == null || b == false) {
+				sess.setAttribute("securityBreached", true);
+				sess.setAttribute("securityBreachStart", new Date());
+			}
 		}
 		else {
 			sess.setAttribute("securityBreached", false);
