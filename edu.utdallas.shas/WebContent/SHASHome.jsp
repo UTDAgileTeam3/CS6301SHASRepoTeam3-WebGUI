@@ -87,7 +87,16 @@ Connection conn = DriverManager.getConnection(url, username, password);
 */
 %>
 
-
+<form>
+	<fieldset style = "width: 300px">
+        <legend style="font-size: 18px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
+ 		Security Status</legend>
+ 	<% if (securityBreached) { %>
+ 	The security has been breached.
+ 	<% } else { %>
+ 	The security has not been breached.
+ 	<% } %>
+	</fieldset>
 	<fieldset style = "width: 300px">
         <legend style="font-size: 18px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
  		Sprinkler Status </legend>                            
@@ -103,7 +112,7 @@ Connection conn = DriverManager.getConnection(url, username, password);
 		
 	</table>
 	</fieldset>
-    
+</form>
 </body>
  
 </html>

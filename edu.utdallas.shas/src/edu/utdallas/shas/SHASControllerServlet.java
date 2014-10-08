@@ -26,6 +26,12 @@ public class SHASControllerServlet extends HttpServlet{
 			throws ServletException, IOException {
      //String sprinklerzone1 = req.getParameter("sprinklerzone1");
 		HttpSession sess = req.getSession();
+		if (req.getParameter("securityAlarm").equalsIgnoreCase("Yes")) {
+			sess.setAttribute("securityBreached", true);
+		}
+		else {
+			sess.setAttribute("securityBreached", false);
+		}
 		setSessionVariable(sess, req, "sprinklerzone1select");
 		setSessionVariable(sess, req, "sprinklerzone2select");
 		setSessionVariable(sess, req, "sprinklerzone3select");

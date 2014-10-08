@@ -23,13 +23,14 @@
 <%@ include file="./header.jsp" %>
 <h3>Adjust all the appliances values here!</h3>
 
+<% boolean securityBreached = (Boolean) request.getSession().getAttribute("securityBreached"); %>
 <form action="./SHASControllerServlet" method="post">
 <table>
 	<tr>
 		<th>Security Breached : </th>
 		<th><select name="securityAlarm" id="securityAlarm" >
      			<option id="securityNo" value="No"> No </option>
-     			<option id="securityYes" value="Yes"> Yes </option>
+     			<option id="securityYes" value="Yes" <%if (securityBreached) {%> selected="selected" <%}%>> Yes </option>
      		</select>
      	</th>
 	</tr>
