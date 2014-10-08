@@ -14,7 +14,7 @@
         #sprinkler tr.odd td { background:#fff url(./images/row_bkg.png) repeat-x scroll center left; cursor:pointer; }
         #sprinkler div.arrow { background:transparent url(./images/arrows.png) no-repeat scroll 0px -16px; width:16px; height:16px; display:block;}
         #sprinkler div.up { background-position:0px 0px;}
-</style>    
+</style>
 <script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SHAS Simulator</title>
