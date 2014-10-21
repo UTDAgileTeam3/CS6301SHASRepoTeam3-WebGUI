@@ -76,4 +76,16 @@ public class ScheduleEvent {
 	public ArrayList<Date> synthesizeFutureEndDates(Date currentTime) {
 		return synthesizeFutureDates(currentTime, endTime);
 	}
+	
+	public int[] getDaysOfWeek() {
+		return daysOfWeek;
+	}
+	
+	public Date getStartTime() {
+		return startTime;
+	}
+	
+	public Date getEndTime() {
+		return endTime;
+	}
 }
