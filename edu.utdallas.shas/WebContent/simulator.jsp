@@ -28,21 +28,29 @@ boolean securityBreached = (Boolean) request.getSession().getAttribute("security
 boolean securityEnabled = (Boolean) request.getSession().getAttribute("securityEnabled");
 %>
 <form action="./SHASControllerServlet" method="post" onsubmit="return checkSecurity()">
-<fieldset style = "width: 300px">
+<fieldset style = "width: 500px">
 <legend style="font-size: 18px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
 Security Alarm</legend>
-Enabled: <select name="securityAlarmEnabled" id="securityAlarmEnabled" onchange="updateEnabled()">
+<table cellspacing="20px">
+<TR>
+<TD >
+<h4>Enabled: <select name="securityAlarmEnabled" id="securityAlarmEnabled" onchange="updateEnabled()">
      <option id="securityEnabledNo" value="No"> No </option>
      <option id="securityEnabledYes" value="Yes" <%if (securityEnabled) {%> selected="selected" <%}%>> Yes </option>
-</select>
-Security Breached:
+</select></h4>
+</TD>
+<TD >
+<h4>Security Breached:
 <select name="securityAlarm" id="securityAlarm" <% if (!securityEnabled) { %> disabled="disabled" <% } %>>
      <option id="securityNo" value="No"> No </option>
      <option id="securityYes" value="Yes" <%if (securityBreached) {%> selected="selected" <%}%>> Yes </option>
-</select>
+</select></h4>
+</TD>
+</TR>
+</table>
 </fieldset>
 
-<fieldset style = "width: 300px">
+<fieldset style = "width: 500px">
 <legend style="font-size: 18px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
 Sprinklers</legend>
 <%@ include file="./sprinkler.jsp" %>
