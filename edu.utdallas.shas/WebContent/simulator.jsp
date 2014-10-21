@@ -23,19 +23,30 @@
 <%@ include file="./header.jsp" %>
 <h3>Adjust all the appliances values here!</h3>
 
-<% boolean securityBreached = (Boolean) request.getSession().getAttribute("securityBreached"); %>
+<%
+boolean securityBreached = (Boolean) request.getSession().getAttribute("securityBreached");
+boolean securityEnabled = (Boolean) request.getSession().getAttribute("securityEnabled");
+%>
 <form action="./SHASControllerServlet" method="post" onsubmit="return checkSecurity()">
-<table>
-	<tr>
-		<th>Security Breached : </th>
-		<th><select name="securityAlarm" id="securityAlarm" >
-     			<option id="securityNo" value="No"> No </option>
-     			<option id="securityYes" value="Yes" <%if (securityBreached) {%> selected="selected" <%}%>> Yes </option>
-     		</select>
-     	</th>
-	</tr>
-	<tr><%@ include file="./sprinkler.jsp" %></tr>
-</table>
+<fieldset style = "width: 300px">
+<legend style="font-size: 18px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
+Security Alarm</legend>
+Enabled: <select name="securityAlarmEnabled" id="securityAlarmEnabled" onchange="updateEnabled()">
+     <option id="securityEnabledNo" value="No"> No </option>
+     <option id="securityEnabledYes" value="Yes" <%if (securityEnabled) {%> selected="selected" <%}%>> Yes </option>
+</select>
+Security Breached:
+<select name="securityAlarm" id="securityAlarm" <% if (!securityEnabled) { %> disabled="disabled" <% } %>>
+     <option id="securityNo" value="No"> No </option>
+     <option id="securityYes" value="Yes" <%if (securityBreached) {%> selected="selected" <%}%>> Yes </option>
+</select>
+</fieldset>
+
+<fieldset style = "width: 300px">
+<legend style="font-size: 18px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
+Sprinklers</legend>
+<%@ include file="./sprinkler.jsp" %>
+</fieldset>
 <input type="submit" id="submitsprinkler" value="Submit">
 </form>
 
@@ -51,7 +62,11 @@ function checkSecurity() {
 	<% } else { %>
 	return true;
 	<% } %>
-}	
+}
+
+function updateEnabled() {
+	document.getElementById("securityAlarm").disabled = (document.getElementById("securityAlarmEnabled").value === "No");
+}
 </script>
 </body>
 </html>

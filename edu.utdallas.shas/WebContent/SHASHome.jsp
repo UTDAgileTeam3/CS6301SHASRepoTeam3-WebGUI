@@ -13,6 +13,7 @@
 
 String uname = (String) request.getSession().getAttribute("uname");
 boolean securityBreached = (Boolean) request.getSession().getAttribute("securityBreached");
+boolean securityEnabled = (Boolean) request.getSession().getAttribute("securityEnabled");
 long securityAlarmMillis = 0;
 if (securityBreached) {
 	Calendar cal = Calendar.getInstance();
@@ -102,7 +103,9 @@ Connection conn = DriverManager.getConnection(url, username, password);
 	<fieldset style = "width: 300px">
         <legend style="font-size: 18px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
  		Security Status</legend>
- 	<% if (!securityBreached) { %>
+ 	<% if (!securityEnabled) { %>
+ 	The security alarm has been disabled.
+ 	<% } else { if (!securityBreached) { %>
  	The security alarm has not detected a breach.
  	<% } else { %>
  	<span id="securityCountdownHidden" style="display: none;"></span>
@@ -123,7 +126,7 @@ Connection conn = DriverManager.getConnection(url, username, password);
  	    	onTick: updateCountdown, tickInterval: 1, alwaysExpire: true})
  	});
  	</script>
- 	<% } %>
+ 	<% } }%>
 	</fieldset>
 	<fieldset style = "width: 300px">
         <legend style="font-size: 18px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
