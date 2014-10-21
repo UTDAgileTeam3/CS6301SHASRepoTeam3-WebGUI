@@ -43,10 +43,16 @@ public class Schedule {
 	
 	public void addEvent(String key, ScheduleEvent e) {
 		schedules.put(key, e);
+		pendingEventsQueue = new PriorityQueue<DateCallbackPair>();
 	}
 	
 	public void removeEvent(String key) {
 		schedules.remove(key);
+		pendingEventsQueue = new PriorityQueue<DateCallbackPair>();
+	}
+	
+	public ScheduleEvent getSchedule(String key) {
+		return schedules.get(key);
 	}
 	
 	private PriorityQueue<DateCallbackPair> getNextEventsQueue() {
@@ -79,7 +85,8 @@ public class Schedule {
 		}
 		else {
 			pendingEventsQueue = getNextEventsQueue();
-			next(request, response);;
+			if (pendingEventsQueue.peek() != null)
+				next(request, response);
 		}
 	}
 }
