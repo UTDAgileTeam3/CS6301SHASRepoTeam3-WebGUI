@@ -3,6 +3,7 @@
 <%@ page import="java.lang.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="edu.utdallas.shas.Schedule" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,6 +15,8 @@
 String uname = (String) request.getSession().getAttribute("uname");
 boolean securityBreached = (Boolean) request.getSession().getAttribute("securityBreached");
 boolean securityEnabled = (Boolean) request.getSession().getAttribute("securityEnabled");
+java.util.Date simulationTime = ((Schedule)request.getSession().getAttribute("schedule")).getCurrentTime();
+String simulationTimeString = simulationTime.toString();
 long securityAlarmMillis = 0;
 if (securityBreached) {
 	Calendar cal = Calendar.getInstance();
@@ -143,6 +146,10 @@ Connection conn = DriverManager.getConnection(url, username, password);
 		
 	</table>
 	</fieldset>
+</form>
+The simulation time is <%= simulationTimeString %>.
+<form action="/SimulationStepServlet" method="post">
+	<input type="submit" id="submit" value="Next Event">
 </form>
 </body>
  
