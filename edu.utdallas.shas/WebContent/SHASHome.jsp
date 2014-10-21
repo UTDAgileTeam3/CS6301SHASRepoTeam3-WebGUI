@@ -148,7 +148,7 @@ Connection conn = DriverManager.getConnection(url, username, password);
 	</fieldset>
 </form>
 The simulation time is <%= simulationTimeString %>.
-<form action="/SimulationStepServlet" method="post">
+<form action="./SimulationStepServlet" method="post">
 	<input type="submit" id="submit" value="Next Event">
 </form>
 </body>

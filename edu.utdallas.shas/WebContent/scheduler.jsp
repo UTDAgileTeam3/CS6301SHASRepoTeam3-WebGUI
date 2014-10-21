@@ -34,6 +34,12 @@ Security Alarm</legend>
 		<td align="center"><input type="checkbox" name="alarm" value="SU"></td>
 	</tr>
 </table>
+<table>
+	<tr>
+		<td>Start: <input type="text" name="alarmstart"></td>
+		<td>End: <input type="text" name="alarmend"></td>
+	</tr>
+</table>
 </fieldset>
 <fieldset style = "width: 300px">
 <legend style="font-size: 18px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
@@ -56,6 +62,12 @@ Sprinkler</legend>
 		<td align="center"><input type="checkbox" name="sprinkler" value="F"></td>
 		<td align="center"><input type="checkbox" name="sprinkler" value="S"></td>
 		<td align="center"><input type="checkbox" name="sprinkler" value="SU"></td>
+	</tr>
+</table>
+<table>
+	<tr>
+		<td>Start: <input type="text" name="sprinklerstart"></td>
+		<td>End: <input type="text" name="sprinklerend"></td>
 	</tr>
 </table>
 </fieldset>
