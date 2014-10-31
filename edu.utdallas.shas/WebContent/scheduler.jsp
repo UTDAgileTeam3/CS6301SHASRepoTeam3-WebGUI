@@ -46,7 +46,7 @@ if (sprinklerSE != null) {
 %>
 <h3>Set Schedule</h3>
 <form action="./SchedulerServlet" method="post">
-<fieldset style = "width: 300px">
+<fieldset style = "width: 450px">
 <legend style="font-size: 18px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
 Security Alarm</legend>
 <table>
@@ -71,12 +71,12 @@ Security Alarm</legend>
 </table>
 <table>
 	<tr>
-		<td>Start: <input type="text" name="alarmstart" value="<%= alarmStart %>"></td>
-		<td>End: <input type="text" name="alarmend" value="<%= alarmEnd %>"></td>
+		<td>Start: <input type="text" name="alarmstart" value="<%= alarmStart %>" placeholder="hh:mm:ss"></td>
+		<td>End: <input type="text" name="alarmend" value="<%= alarmEnd %>" placeholder="hh:mm:ss"></td>
 	</tr>
 </table>
 </fieldset>
-<fieldset style = "width: 300px">
+<fieldset style = "width: 450px">
 <legend style="font-size: 18px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
 Sprinkler</legend>
 <table>
@@ -101,8 +101,8 @@ Sprinkler</legend>
 </table>
 <table>
 	<tr>
-		<td>Start: <input type="text" name="sprinklerstart" value="<%= sprinklerStart %>"></td>
-		<td>End: <input type="text" name="sprinklerend" value="<%= sprinklerEnd %>"></td>
+		<td>Start: <input type="text" name="sprinklerstart" value="<%= sprinklerStart %>" placeholder="hh:mm:ss"></td>
+		<td>End: <input type="text" name="sprinklerend" value="<%= sprinklerEnd %>" placeholder="hh:mm:ss"></td>
 	</tr>
 </table>
 </fieldset>

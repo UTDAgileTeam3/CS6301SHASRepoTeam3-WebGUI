@@ -20,4 +20,12 @@
     <servlet-name>SHASControllerServlet</servlet-name>
     <url-pattern>/SHASControllerServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>NewUserServlet</servlet-name>
+    <servlet-class>edu.utdallas.shas.NewUserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NewUserServlet</servlet-name>
+    <url-pattern>/NewUserServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

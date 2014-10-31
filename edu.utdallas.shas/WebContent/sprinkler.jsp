@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-   <html>
-<head>
+  
 <script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="./js/jquery-ui.min.js"></script>
 
@@ -70,10 +69,7 @@
         }
         
     </script>
-   </head>
-<body> 
-
-<table id="sprinkler" >
+  <table id="sprinkler" >
 <%
 String sprinkler1 = (String) request.getSession().getAttribute("sprinklerzone1select");
 String sprinkler2 = (String) request.getSession().getAttribute("sprinklerzone2select");
@@ -198,5 +194,4 @@ String sprinkler4 = (String) request.getSession().getAttribute("sprinklerzone4se
         </tr>
   </table>
 
- </body>
- </html> 
+ 

@@ -8,7 +8,9 @@
 			<a href="SHASHome.jsp"><img style="width: 40px; height: 40px; padding: 2px; border: 0px" title="Home" alt="Home" src="./images/home.png"/></a>
 			<a href="scheduler.jsp"><img style="width: 40px; height: 40px; padding: 2px; border: 0px" title="Scheduler" alt="Scheduler" src="./images/scheduler.png"/></a>
 			<a href="simulator.jsp"><img style="width: 40px; height: 40px; padding: 2px; border: 0px" title="Settings" alt="Settings" src="./images/settings.png"/></a>
+			<a href="newUser.jsp"><img style="width: 40px; height: 40px; padding: 2px; border: 0px" title="Create new user" alt="Create new user" src="./images/config-users.png"/></a>
 			<a href="${pageContext.request.contextPath}/logout"><img style="width: 40px; height: 40px; padding: 2px; border: 0px" title="Logout" title="Logout" alt="Logout" src="./images/logout.png"/></a>
+			
 		</td>
 	</tr>
 </table>
