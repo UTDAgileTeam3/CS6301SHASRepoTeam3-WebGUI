@@ -5,8 +5,17 @@
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 
 <%@ page import="java.sql.*" %>
-<% Class.forName("org.postgresql.Driver"); 
-Connection myConn=DriverManager.getConnection("jdbc:postgresql://localhost/SHAS", "postgres", "sneha");
+<% 
+Properties properties = new Properties();
+properties.load(getServletContext().getResourceAsStream("/WEB-INF/database.properties"));
+System.out.println(properties);
+String url = properties.getProperty("jdbc.url");
+String driver = properties.getProperty("jdbc.driver");
+String username = properties.getProperty("jdbc.username");
+String password = properties.getProperty("jdbc.password");
+
+Class.forName(driver); 
+Connection myConn=DriverManager.getConnection(url, username, password);
 Statement statement = myConn.createStatement() ;
             ResultSet resultset = statement.executeQuery("select * from shasuser") ;%>
  
