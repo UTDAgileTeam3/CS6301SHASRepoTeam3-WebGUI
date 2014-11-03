@@ -153,5 +153,6 @@ function updateEnabled() {
 	document.getElementById("securityAlarm").disabled = (document.getElementById("securityAlarmEnabled").value === "No");
 }
 </script>
+
 </body>
 </html>
