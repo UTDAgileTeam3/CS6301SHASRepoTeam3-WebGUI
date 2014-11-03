@@ -18,6 +18,18 @@
 <script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SHAS Simulator</title>
+<script type="text/javascript">
+
+function hvacOffClicked()
+{
+		$("#hvacTemperature").prop("disabled",!this.checked);
+}
+function acOrHeaterOnClicked()
+{
+		$("#hvacTemperature").prop("disabled", false);
+}
+
+</script>
 </head>
 <body>
 <%@ include file="./header.jsp" %>
@@ -28,34 +40,99 @@ boolean securityBreached = (Boolean) request.getSession().getAttribute("security
 boolean securityEnabled = (Boolean) request.getSession().getAttribute("securityEnabled");
 %>
 <form action="./SHASControllerServlet" method="post" onsubmit="return checkSecurity()">
-<fieldset style = "width: 500px">
-<legend style="font-size: 18px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
-Security Alarm</legend>
-<table cellspacing="20px">
-<TR>
-<TD >
-<h4>Enabled: <select name="securityAlarmEnabled" id="securityAlarmEnabled" onchange="updateEnabled()">
-     <option id="securityEnabledNo" value="No"> No </option>
-     <option id="securityEnabledYes" value="Yes" <%if (securityEnabled) {%> selected="selected" <%}%>> Yes </option>
-</select></h4>
-</TD>
-<TD >
-<h4>Security Breached:
-<select name="securityAlarm" id="securityAlarm" <% if (!securityEnabled) { %> disabled="disabled" <% } %>>
-     <option id="securityNo" value="No"> No </option>
-     <option id="securityYes" value="Yes" <%if (securityBreached) {%> selected="selected" <%}%>> Yes </option>
-</select></h4>
-</TD>
-</TR>
+<table>
+	<tr>
+		<td>
+			<fieldset style = "width: 500px; height: 120px">
+			<legend style="font-size: 18px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
+			Security Alarm</legend>
+			<table cellspacing="20px">
+				<TR>
+					<TD >
+					<h4>Enabled: <select name="securityAlarmEnabled" id="securityAlarmEnabled" onchange="updateEnabled()">
+					     <option id="securityEnabledNo" value="No"> No </option>
+					     <option id="securityEnabledYes" value="Yes" <%if (securityEnabled) {%> selected="selected" <%}%>> Yes </option>
+					</select></h4>
+					</TD>
+					<TD >
+					<h4>Security Breached:
+					<select name="securityAlarm" id="securityAlarm" <% if (!securityEnabled) { %> disabled="disabled" <% } %>>
+					     <option id="securityNo" value="No"> No </option>
+					     <option id="securityYes" value="Yes" <%if (securityBreached) {%> selected="selected" <%}%>> Yes </option>
+					</select></h4>
+					</TD>
+				</TR>
+			</table>
+			</fieldset>
+		</td>
+		<td>
+			<fieldset style = "width: 400px; height: 120px">
+			<legend style="font-size: 18px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
+			HVAC</legend>
+			<table cellspacing="20px">
+				<TR>
+					<TD>
+						<INPUT TYPE="radio" NAME="hvac" id="hvacOff" VALUE="hvacOff" onclick="hvacOffClicked();"><B>OFF</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            			<INPUT TYPE="radio" NAME="hvac" id="acOn" VALUE="acOn" CHECKED onclick="acOrHeaterOnClicked();"><B>AC ON</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            			<INPUT TYPE="radio" NAME="hvac" id="heaterOn" VALUE="heaterOn" onclick="acOrHeaterOnClicked();"><B>Heater ON</B>
+					</TD>
+				</TR>
+				<TR>
+					<TD>
+						<B> Enter Temperature(in fahrenheit): <input type="text" name="hvacTemperature" id="hvacTemperature" maxlength="2" style="width:30px" value="75"/></B>
+					</TD>
+				</TR>
+			</table>
+			</fieldset>
+		</td>
+	</tr>
+	<tr>
+	<td>
+	<fieldset style = "width: 500px">
+	<legend style="font-size: 18px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
+	Sprinklers</legend>
+	<%@ include file="./sprinkler.jsp" %>
+	</fieldset>
+	</td>
+	<td>
+		<fieldset style = "width: 400px; height: 225px">
+			<legend style="font-size: 18px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
+			Safety Alarms</legend>
+			<table cellspacing="5px">
+				<TR>
+					<TD >
+					<h4>Smoke Detected:</h4></TD><TD><h4> <select name="smokeDetected" id="smokeDetected" onchange="">
+					     <option id="smokeDetectedNo" value="No"> No </option>
+					     <option id="smokeDetectedYes" value="Yes"> Yes </option>
+					</select></h4>
+					</TD>
+				</TR>
+				<TR>
+					<TD >
+					<h4>Carbon Monoxide Detected:</h4></TD><TD>
+					<h4><select name="coDetected" id="coDetected">
+					     <option id="coDetectedNo" value="No"> No </option>
+					     <option id="coDetectedYes" value="Yes"> Yes </option>
+					</select></h4>
+					</TD>
+				</TR>
+				<TR>
+					<TD >
+					<h4>Natural Gas Detected:</h4></TD><TD>
+					<h4>
+					<select name="naturalGasDetected" id="naturalGasDetected">
+					     <option id="naturalGasDetectedNo" value="No"> No </option>
+					     <option id="naturalGasDetectedYes" value="Yes"> Yes </option>
+					</select></h4>
+					</TD>
+				</TR>
+			</table>
+			</fieldset>
+	</td>
+	</tr>
 </table>
-</fieldset>
-
-<fieldset style = "width: 500px">
-<legend style="font-size: 18px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
-Sprinklers</legend>
-<%@ include file="./sprinkler.jsp" %>
-</fieldset>
 <input type="submit" id="submitsprinkler" value="Submit">
+
 </form>
 
 <script type="text/javascript">

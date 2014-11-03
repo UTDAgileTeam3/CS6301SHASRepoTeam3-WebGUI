@@ -103,49 +103,73 @@ Connection conn = DriverManager.getConnection(url, username, password);
 %>
 
 <form>
-	<fieldset style = "width: 300px">
-        <legend style="font-size: 18px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
- 		Security Status</legend>
- 	<% if (!securityEnabled) { %>
- 	The security alarm has been disabled.
- 	<% } else { if (!securityBreached) { %>
- 	The security alarm has not detected a breach.
- 	<% } else { %>
- 	<span id="securityCountdownHidden" style="display: none;"></span>
- 	<span id="securityCountdown" style="color: red;"></span>
- 	<script type="text/javascript">
- 	function updateCountdown(periods) {
- 		var msg = 'The security alarm has detected a breach.';
- 		if (periods[6] === 0) {
- 			msg += ' The police and homeowner have been notified!';
- 		}
- 		else {
-			msg += ' The homeowner has been notified. If the alarm is not cancelled, the police will be notified in ' + periods[6] + ' seconds.';
- 		}
- 		$('#securityCountdown').text(msg);
- 	}
- 	$(document).ready(function(){
- 		$('#securityCountdownHidden').countdown({until: new Date(<%= securityAlarmMillis %>), format: 'S', 
- 	    	onTick: updateCountdown, tickInterval: 1, alwaysExpire: true})
- 	});
- 	</script>
- 	<% } }%>
-	</fieldset>
-	<fieldset style = "width: 300px">
-        <legend style="font-size: 18px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
- 		Sprinkler Status </legend>                            
-	<table align="center" border="2px" style="width:200px;height: 200px">
+	<table>
 		<tr>
-		<TH id="sprinklerzone1" class="grayzone">Sprinkler Zone1</TH>
-		<TH id="sprinklerzone2" class="grayzone">Sprinkler Zone2</TH>
-		<TR/>
-
-		<TR>
-		<TH id="sprinklerzone3" class="grayzone">Sprinkler Zone3</TH>
-		<TH id="sprinklerzone4" class="grayzone">Sprinkler Zone4</TH>
-		
+			<td>
+				<fieldset style = "width: 300px; height: 50px">
+			        <legend style="font-size: 16px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
+			 		Security Status</legend>
+			 	<% if (!securityEnabled) { %>
+			 	The security alarm has been disabled.
+			 	<% } else { if (!securityBreached) { %>
+			 	The security alarm has not detected a breach.
+			 	<% } else { %>
+			 	<span id="securityCountdownHidden" style="display: none;"></span>
+			 	<span id="securityCountdown" style="color: red;"></span>
+			 	<script type="text/javascript">
+			 	function updateCountdown(periods) {
+			 		var msg = 'The security alarm has detected a breach.';
+			 		if (periods[6] === 0) {
+			 			msg += ' The police and homeowner have been notified!';
+			 		}
+			 		else {
+						msg += ' The homeowner has been notified. If the alarm is not cancelled, the police will be notified in ' + periods[6] + ' seconds.';
+			 		}
+			 		$('#securityCountdown').text(msg);
+			 	}
+			 	$(document).ready(function(){
+			 		$('#securityCountdownHidden').countdown({until: new Date(<%= securityAlarmMillis %>), format: 'S', 
+			 	    	onTick: updateCountdown, tickInterval: 1, alwaysExpire: true})
+			 	});
+			 	</script>
+			 	<% } }%>
+				</fieldset>
+			</td>
+			<td>
+				<fieldset style = "width: 300px; height: 50px">
+			        <legend style="font-size: 16px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
+			 		HVAC Status</legend>
+			 	
+				</fieldset>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<fieldset style = "width: 300px; height: 220px">
+			        <legend style="font-size: 16px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
+			 		Sprinkler Status </legend>                            
+				<table align="center" border="2px" style="width:200px;height: 200px">
+					<tr>
+					<TH id="sprinklerzone1" class="grayzone">Sprinkler Zone1</TH>
+					<TH id="sprinklerzone2" class="grayzone">Sprinkler Zone2</TH>
+					<TR/>
+			
+					<TR>
+					<TH id="sprinklerzone3" class="grayzone">Sprinkler Zone3</TH>
+					<TH id="sprinklerzone4" class="grayzone">Sprinkler Zone4</TH>
+					
+				</table>
+				</fieldset>
+			</td>
+			<td>
+				<fieldset style = "width: 300px; height: 220px">
+			        <legend style="font-size: 16px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
+			 		Safety Alarms Status</legend>
+			 	
+				</fieldset>
+			</td>
+		</tr>
 	</table>
-	</fieldset>
 </form>
 The simulation time is <%= simulationTimeString %>.
 <form action="./SimulationStepServlet" method="post">
