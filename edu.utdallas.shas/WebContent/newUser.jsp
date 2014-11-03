@@ -23,10 +23,44 @@ Statement statement = myConn.createStatement() ;
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create New User for SHAS</title>
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+function validateForm()
+{
+	var password = $.trim($('#new_password').val());
+	var confirmPassword = $.trim($('#confirm_new_password').val());
+	var name = $.trim($('#new_name').val());
+	var uname = $.trim($('#new_uname').val());
+	var phonenumber = $.trim($('#new_phonenumber').val());
+	var email = $.trim($('#new_email').val());
+	if( password === confirmPassword)
+	{
+		if(!isBlank(password) && !isBlank(confirmPassword) && !isBlank(name) && !isBlank(uname) && !isBlank(phonenumber) && !isBlank(email))
+			return true;
+		else
+		{
+			alert("All the fields should have proper values!");
+			return false;
+		}
+	}
+	else
+	{
+		alert("Password confirmation does not match with the entered password!!");
+		return false;
+	}
+}
+
+function isBlank(string)
+{
+	if(string === '')
+		return true;
+	return false;
+}
+</script>
 </head>
 <body>
 <%@ include file="./header.jsp" %>
-<TABLE BORDER="1">
+<%-- <TABLE BORDER="1">
             <TR>
                 
                 <TH>Name</TH>
@@ -38,9 +72,9 @@ Statement statement = myConn.createStatement() ;
                 <TD> <%= resultset.getString(4) %></TD>
                </TR>
             <% } %>
-        </TABLE>
+        </TABLE> --%>
 <center>
-<form action="./NewUserServlet" method ="post" >
+<form action="./NewUserServlet" method ="post" onsubmit="return validateForm();">
 	<fieldset style = "width: 700px">
         <legend style="font-size: 18px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
  		Create New User </legend>   

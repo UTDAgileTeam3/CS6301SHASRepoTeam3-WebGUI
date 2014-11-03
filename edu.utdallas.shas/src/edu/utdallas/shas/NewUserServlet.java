@@ -23,8 +23,8 @@ public class NewUserServlet extends HttpServlet {
 		String newusername = req.getParameter("new_uname");
 		String newpassword = req.getParameter("new_password");
 		String confirmpassword = req.getParameter("confirm_new_password");
-		String email = req.getParameter("new_phonenumber");
-		String phonenumber = req.getParameter("new_email");
+		String email = req.getParameter("new_email");
+		String phonenumber = req.getParameter("new_phonenumber");
 		
 		Properties properties = new Properties();
 		properties.load(getServletContext().getResourceAsStream("/WEB-INF/database.properties"));
@@ -38,7 +38,12 @@ public class NewUserServlet extends HttpServlet {
 			Class.forName(driver);
 			Connection myConn=DriverManager.getConnection(url, username, password);
 			Statement statement = myConn.createStatement() ;
-			ResultSet resultset = statement.executeQuery("insert into shasuser ()") ;
+			String query = "insert into shasuser (username, password, name, phonenumber, address, accesslevel) "
+					+ "values('"+newusername+"', '"+newpassword+"', '"+name+"', "+ phonenumber+", '"+email+"', 1)";
+			System.out.println("*****************************Query:  "+query);
+			statement.execute(query) ;
+			statement.close();
+			myConn.close();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
