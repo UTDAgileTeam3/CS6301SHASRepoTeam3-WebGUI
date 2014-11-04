@@ -18,8 +18,23 @@
 <script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SHAS Simulator</title>
-<script type="text/javascript">
 
+<%
+boolean securityBreached = (Boolean) request.getSession().getAttribute("securityBreached");
+boolean securityEnabled = (Boolean) request.getSession().getAttribute("securityEnabled");
+String hvac = (String) request.getSession().getAttribute("hvac");
+String hvacTemperature = (String) request.getSession().getAttribute("hvacTemperature"); 
+%>
+<script type="text/javascript">
+$(document).ready(function(){
+	var temperature;
+<%if(hvacTemperature!=null){%>
+temperature = <%=hvacTemperature%>;
+<%}else{%>
+temperature = "75";
+<%}%>
+$("#hvacTemperature").val(temperature);
+});
 function hvacOffClicked()
 {
 		$("#hvacTemperature").prop("disabled",!this.checked);
@@ -35,12 +50,6 @@ function acOrHeaterOnClicked()
 <%@ include file="./header.jsp" %>
 <h3>Adjust all the appliances values here!</h3>
 
-<%
-boolean securityBreached = (Boolean) request.getSession().getAttribute("securityBreached");
-boolean securityEnabled = (Boolean) request.getSession().getAttribute("securityEnabled");
-String hvac = (String) request.getSession().getAttribute("hvac");
-String hvacTemperature = (String) request.getSession().getAttribute("hvacTemperature"); 
-%>
 <form action="./SHASControllerServlet" method="post" onsubmit="return checkSecurity()">
 <table>
 	<tr>
@@ -58,10 +67,10 @@ String hvacTemperature = (String) request.getSession().getAttribute("hvacTempera
 					</TD>
 					<TD >
 					<h4>Security Breached:
-					<select name="securityAlarm" id="securityAlarm" <% if (!securityEnabled) { %> disabled="disabled" <% } %>>
+					<%-- <select name="securityAlarm" id="securityAlarm" <% if (!securityEnabled) { %> disabled="disabled" <% } %>>
 					     <option id="securityNo" value="No"> No </option>
 					     <option id="securityYes" value="Yes" <%if (securityBreached) {%> selected="selected" <%}%>> Yes </option>
-					</select></h4>
+					</select></h4> --%>
 					</TD>
 				</TR>
 			</table>
@@ -81,7 +90,7 @@ String hvacTemperature = (String) request.getSession().getAttribute("hvacTempera
 				</TR>
 				<TR>
 					<TD>
-						<B> Enter Temperature(in fahrenheit): <input type="text" name="hvacTemperature" id="hvacTemperature" maxlength="2" style="width:30px" value="<%=hvacTemperature%>" <%if(hvac!=null && hvac.equalsIgnoreCase("hvacOff")){ %> disabled<%} %>/></B>
+						<B> Enter Temperature(in fahrenheit): <input type="text" name="hvacTemperature" id="hvacTemperature" maxlength="2" style="width:30px"  <%if(hvac!=null && hvac.equalsIgnoreCase("hvacOff")){ %> disabled<%} %>/></B>
 					</TD>
 				</TR>
 			</table>

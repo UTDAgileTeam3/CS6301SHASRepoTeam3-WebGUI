@@ -142,12 +142,14 @@ Connection conn = DriverManager.getConnection(url, username, password);
 				<fieldset style = "width: 300px; height: 50px">
 			        <legend style="font-size: 16px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
 			 		HVAC Status</legend>
-			 		<%if(hvac.equalsIgnoreCase("hvacOff")){ %>
+			 		<%if(hvac!=null && hvac.equalsIgnoreCase("hvacOff")){ %>
 			 		HVAC is currently off.
-			 		<%} else if(hvac.equalsIgnoreCase("heaterOn")){%>
+			 		<%} else if(hvac!=null && hvac.equalsIgnoreCase("heaterOn")){%>
 			 		Heater is currently running and set temperature is: <B> <%=hvacTemperature %> </B>
-			 		<%} else if(hvac.equalsIgnoreCase("acOn")){ %>
+			 		<%} else if(hvac!=null && hvac.equalsIgnoreCase("acOn")){ %>
 			 		AC is currently running and set temperature is: <B> <%=hvacTemperature %> </B>
+			 		<%} else {%>
+			 		AC is currently running and set temperature is <B>75</B>
 			 		<%} %>
 				</fieldset>
 			</td>
