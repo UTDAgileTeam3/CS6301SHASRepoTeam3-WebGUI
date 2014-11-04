@@ -24,15 +24,14 @@ boolean securityBreached = (Boolean) request.getSession().getAttribute("security
 boolean securityEnabled = (Boolean) request.getSession().getAttribute("securityEnabled");
 String hvac = (String) request.getSession().getAttribute("hvac");
 String hvacTemperature = (String) request.getSession().getAttribute("hvacTemperature"); 
+boolean smokeDetected = (Boolean) request.getSession().getAttribute("smokeDetectedB");
+boolean coDetected = (Boolean) request.getSession().getAttribute("coDetectedB");
+boolean naturalGasDetected = (Boolean) request.getSession().getAttribute("naturalGasDetectedB");
 %>
 <script type="text/javascript">
 $(document).ready(function(){
-	var temperature;
-<%if(hvacTemperature!=null){%>
-temperature = <%=hvacTemperature%>;
-<%}else{%>
-temperature = "75";
-<%}%>
+	var temperature = <%=hvacTemperature%>;
+
 $("#hvacTemperature").val(temperature);
 });
 function hvacOffClicked()
@@ -114,7 +113,7 @@ function acOrHeaterOnClicked()
 					<TD >
 					<h4>Smoke Detected:</h4></TD><TD><h4> <select name="smokeDetected" id="smokeDetected" onchange="">
 					     <option id="smokeDetectedNo" value="No"> No </option>
-					     <option id="smokeDetectedYes" value="Yes"> Yes </option>
+					     <option id="smokeDetectedYes" value="Yes" <%if (smokeDetected) {%> selected="selected" <%}%>> Yes </option>
 					</select></h4>
 					</TD>
 				</TR>
@@ -123,7 +122,7 @@ function acOrHeaterOnClicked()
 					<h4>Carbon Monoxide Detected:</h4></TD><TD>
 					<h4><select name="coDetected" id="coDetected">
 					     <option id="coDetectedNo" value="No"> No </option>
-					     <option id="coDetectedYes" value="Yes"> Yes </option>
+					     <option id="coDetectedYes" value="Yes" <%if (coDetected) {%> selected="selected" <%}%>> Yes </option>
 					</select></h4>
 					</TD>
 				</TR>
@@ -133,7 +132,7 @@ function acOrHeaterOnClicked()
 					<h4>
 					<select name="naturalGasDetected" id="naturalGasDetected">
 					     <option id="naturalGasDetectedNo" value="No"> No </option>
-					     <option id="naturalGasDetectedYes" value="Yes"> Yes </option>
+					     <option id="naturalGasDetectedYes" value="Yes" <%if (naturalGasDetected) {%> selected="selected" <%}%>> Yes </option>
 					</select></h4>
 					</TD>
 				</TR>
