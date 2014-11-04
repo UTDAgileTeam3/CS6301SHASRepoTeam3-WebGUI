@@ -16,6 +16,8 @@ String uname = (String) request.getSession().getAttribute("uname");
 boolean securityBreached = (Boolean) request.getSession().getAttribute("securityBreached");
 boolean securityEnabled = (Boolean) request.getSession().getAttribute("securityEnabled");
 java.util.Date simulationTime = ((Schedule)request.getSession().getAttribute("schedule")).getCurrentTime();
+String hvac = (String) request.getSession().getAttribute("hvac");
+String hvacTemperature = (String) request.getSession().getAttribute("hvacTemperature");
 String simulationTimeString = simulationTime.toString();
 long securityAlarmMillis = 0;
 if (securityBreached) {
@@ -164,6 +166,13 @@ Connection conn = DriverManager.getConnection(url, username, password);
 				<fieldset style = "width: 300px; height: 50px">
 			        <legend style="font-size: 16px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
 			 		HVAC Status</legend>
+			 		<%if(hvac!=null && hvac.equalsIgnoreCase("hvacOff")){ %>
+ 			 		HVAC is currently off.
+					<%} else if(hvac!=null && hvac.equalsIgnoreCase("heaterOn")){%>
+ 			 		Heater is currently running and set temperature is: <B> <%=hvacTemperature %> </B>
+			 		<%} else if(hvac!=null && hvac.equalsIgnoreCase("acOn")){ %>
+ 			 		AC is currently running and set temperature is: <B> <%=hvacTemperature %> </B>
+			 		<%}%>
 			 	
 				</fieldset>
 			</td>

@@ -44,7 +44,7 @@ public class SHASControllerServlet extends HttpServlet{
 		if (smokeDetected != null && smokeDetected.equalsIgnoreCase("Yes")) {
 			Boolean b = (Boolean)sess.getAttribute("smokeDetectedB");
 			if (b == null || b == false) {
-				sess.setAttribute("smoBkeDetected", true);
+				sess.setAttribute("smokeDetectedB", true);
 			}
 		}
 		else {

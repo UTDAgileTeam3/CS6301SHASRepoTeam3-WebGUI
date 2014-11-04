@@ -91,6 +91,11 @@ public class LoginServlet extends HttpServlet{
 						sess.setAttribute("securityBreached", false);
 						sess.setAttribute("securityEnabled", true);
 						sess.setAttribute("schedule", new Schedule());
+						sess.setAttribute("smokeDetectedB", false);
+						sess.setAttribute("coDetectedB", false);
+						sess.setAttribute("naturalGasDetectedB", false);
+						sess.setAttribute("hvac", "acOn");
+						sess.setAttribute("hvacTemperature", "75");
 						RequestDispatcher rd = req.getRequestDispatcher("./SHASHome.jsp");
 						rd.forward(req, resp);
 					}
