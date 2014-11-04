@@ -17,7 +17,8 @@
 <script src='js/fullcalendar/fullcalendar.js'></script>
 
 <script>
-
+	var calData = [];
+	var calEventSources = [];
 	$(document).ready(function() {
 	
 	
@@ -52,7 +53,7 @@
 			header: {
 				left: 'prev,next today',
 				center: 'title',
-				right: 'month,agendaWeek,agendaDay'
+				right: 'month,agendaWeek'
 			},
 			editable: true,
 			droppable: true, // this allows things to be dropped onto the calendar !!!
@@ -66,23 +67,80 @@
 				
 				// assign it the date that was reported
 				copiedEventObject.start = date;
-				
-				// render the event on the calendar
-				// the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-				$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
-				
-				// is the "remove after drop" checkbox checked?
-				if ($('#drop-remove').is(':checked')) {
-					// if so, remove the element from the "Draggable Events" list
-					$(this).remove();
+
+				var eventSrc = null;
+				if ($('#one-shot').is(':checked')) {
+					copiedEventObject.type = 'one-shot';
+					copiedEventObject.eventobj = $.extend({}, copiedEventObject);
+					eventSrc = [copiedEventObject];
+					calData.push(copiedEventObject.eventobj);
 				}
-				
+				else if ($('#weekly').is(':checked')) {
+					copiedEventObject.type = 'weekly';
+					eventSrc = repeatES(copiedEventObject, 7, 'days');
+					calData.push(copiedEventObject);
+				}
+				else if ($('#monthly').is(':checked')) {
+					copiedEventObject.type = 'monthly';
+					eventSrc = repeatES(copiedEventObject, 1, 'month');
+					calData.push(copiedEventObject);
+				}
+				$('#calendar').fullCalendar('addEventSource', eventSrc);
+				calEventSources.push(eventSrc);
+				alert(JSON.stringify(calData));
+			},
+			eventDrop: function(event, delta, revertFunc) {
+				updateRecurObj(event);
+			},
+			eventResize: function(event, delta, revertFunc) {
+				updateRecurObj(event);
 			}
 		});
-		
-		
 	});
 
+	function updateRecurObj(event) {
+		event.eventobj.start = event.start;
+		event.eventobj.end = event.end;
+	}
+	function repeatES(eventobj, time, unit) {
+		return function(start, end, timezone, callback) {
+			var events = [];
+		
+			var loop = moment(eventobj.start);
+			while (loop.isBefore(start)) {
+				loop.add(time, unit);
+			}
+			events.push({
+				title: eventobj.title,
+				start: moment(loop),
+				eventobj: eventobj,
+				allDay: true
+			})
+		    while (!loop.isAfter(end)) {
+		    	loop.add(time, unit);
+		    	events.push({
+			    	title: eventobj.title,
+		    		start: moment(loop),
+		    		eventobj: eventobj,
+		    		allDay: true
+		    	});
+			} // for loop
+		
+			// return events generated
+			callback( events );
+		};
+	}
+	function setjson() {
+		var eventsFromCalendar = $('#calendar').fullCalendar('clientEvents');
+		$('input[name=calendarjson]').val(JSON.stringify(calData));
+		alert(JSON.stringify(calData));
+	}
+	
+	function clearcal() {
+		for (var i = 0; i < calEventSources.length; i++) {
+			$('#calendar').fullCalendar('removeEventSource', calEventSources[i]);
+		}
+	}
 </script>
 
 <style>
@@ -101,7 +159,7 @@
 		
 	#external-events {
 		float: left;
-		width: 150px;
+		width: 175px;
 		padding: 0 10px;
 		border: 1px solid #ccc;
 		background: #eee;
@@ -141,119 +199,31 @@
 <body>
 <%@ include file="./header.jsp" %>
 
-<%
-Schedule sched = (Schedule)request.getSession().getAttribute("schedule");
-ScheduleEvent alarmSE = sched.getSchedule("alarm");
-ScheduleEvent sprinklerSE = sched.getSchedule("sprinkler");
-
-ArrayList<Integer> alarmDays = new ArrayList<Integer>();
-ArrayList<Integer> sprinklerDays = new ArrayList<Integer>();
-String alarmStart = "";
-String alarmEnd = "";
-String sprinklerStart = "";
-String sprinklerEnd = "";
-
-SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-
-if (alarmSE != null) {
-	for (int i : alarmSE.getDaysOfWeek())
-		alarmDays.add(i);
-	
-	alarmStart = sdf.format(alarmSE.getStartTime());
-	alarmEnd = sdf.format(alarmSE.getEndTime());
-}
-
-if (sprinklerSE != null) {
-	for (int i : sprinklerSE.getDaysOfWeek())
-		sprinklerDays.add(i);
-	
-	sprinklerStart = sdf.format(sprinklerSE.getStartTime());
-	sprinklerEnd = sdf.format(sprinklerSE.getEndTime());
-}
-%>
 <h3>Set Schedule</h3>
 	<div id='wrap'>
 
 		<div id='external-events'>
-			<h4>Draggable Events</h4>
-			<div class='fc-event'>My Event 1</div>
-			<div class='fc-event'>My Event 2</div>
-			<div class='fc-event'>My Event 3</div>
-			<div class='fc-event'>My Event 4</div>
-			<div class='fc-event'>My Event 5</div>
-			<p>
-				<input type='checkbox' id='drop-remove' />
-				<label for='drop-remove'>remove after drop</label>
-			</p>
+			<h4>Appliances</h4>
+			<div class='fc-event'>Security Alarm</div>
+			<div class='fc-event'>Sprinkler</div>
+			<div class='fc-event'>HVAC</div>
+			<form>
+				<p>
+					<input type="radio" name="sched" id="one-shot" value="one-shot" checked="checked"><label for="one-shot">One-shot</label>
+					<input type="radio" name="sched" id="weekly" value="weekly"><label for="weekly">Weekly</label>
+					<input type="radio" name="sched" id="monthly" value="monthly"><label for="monthly">Monthly</label>
+				</p>
+			</form>
 		</div>
-
+<form action="./SchedulerServlet" method="post" onsubmit="return setjson();">
+<input type="hidden" name="calendarjson" value="">
 		<div id='calendar'></div>
 
 		<div style='clear:both'></div>
-
-	</div>
-<form action="./SchedulerServlet" method="post">
-<fieldset style = "width: 450px">
-<legend style="font-size: 18px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
-Security Alarm</legend>
-<table>
-	<tr>
-		<td align="center">Monday</td>
-		<td align="center">Tuesday</td>
-		<td align="center">Wednesday</td>
-		<td align="center">Thursday</td>
-		<td align="center">Friday</td>
-		<td align="center">Saturday</td>
-		<td align="center">Sunday</td>
-	</tr>
-	<tr>
-		<td align="center"><input type="checkbox" name="alarm" value="M" <% if (alarmDays.contains(Calendar.MONDAY)) { %> checked="checked" <% } %>></td>
-		<td align="center"><input type="checkbox" name="alarm" value="T" <% if (alarmDays.contains(Calendar.TUESDAY)) { %> checked="checked" <% } %>></td>
-		<td align="center"><input type="checkbox" name="alarm" value="W" <% if (alarmDays.contains(Calendar.WEDNESDAY)) { %> checked="checked" <% } %>></td>
-		<td align="center"><input type="checkbox" name="alarm" value="TR" <% if (alarmDays.contains(Calendar.THURSDAY)) { %> checked="checked" <% } %>></td>
-		<td align="center"><input type="checkbox" name="alarm" value="F" <% if (alarmDays.contains(Calendar.FRIDAY)) { %> checked="checked" <% } %>></td>
-		<td align="center"><input type="checkbox" name="alarm" value="S" <% if (alarmDays.contains(Calendar.SATURDAY)) { %> checked="checked" <% } %>></td>
-		<td align="center"><input type="checkbox" name="alarm" value="SU" <% if (alarmDays.contains(Calendar.SUNDAY)) { %> checked="checked" <% } %>></td>
-	</tr>
-</table>
-<table>
-	<tr>
-		<td>Start: <input type="text" name="alarmstart" value="<%= alarmStart %>" placeholder="hh:mm:ss"></td>
-		<td>End: <input type="text" name="alarmend" value="<%= alarmEnd %>" placeholder="hh:mm:ss"></td>
-	</tr>
-</table>
-</fieldset>
-<fieldset style = "width: 450px">
-<legend style="font-size: 18px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
-Sprinkler</legend>
-<table>
-	<tr>
-		<td align="center">Monday</td>
-		<td align="center">Tuesday</td>
-		<td align="center">Wednesday</td>
-		<td align="center">Thursday</td>
-		<td align="center">Friday</td>
-		<td align="center">Saturday</td>
-		<td align="center">Sunday</td>
-	</tr>
-	<tr>
-		<td align="center"><input type="checkbox" name="sprinkler" value="M" <% if (sprinklerDays.contains(Calendar.MONDAY)) { %> checked="checked" <% } %>></td>
-		<td align="center"><input type="checkbox" name="sprinkler" value="T" <% if (sprinklerDays.contains(Calendar.TUESDAY)) { %> checked="checked" <% } %>></td>
-		<td align="center"><input type="checkbox" name="sprinkler" value="W" <% if (sprinklerDays.contains(Calendar.WEDNESDAY)) { %> checked="checked" <% } %>></td>
-		<td align="center"><input type="checkbox" name="sprinkler" value="TR" <% if (sprinklerDays.contains(Calendar.THURSDAY)) { %> checked="checked" <% } %>></td>
-		<td align="center"><input type="checkbox" name="sprinkler" value="F" <% if (sprinklerDays.contains(Calendar.FRIDAY)) { %> checked="checked" <% } %>></td>
-		<td align="center"><input type="checkbox" name="sprinkler" value="S" <% if (sprinklerDays.contains(Calendar.SATURDAY)) { %> checked="checked" <% } %>></td>
-		<td align="center"><input type="checkbox" name="sprinkler" value="SU" <% if (sprinklerDays.contains(Calendar.SUNDAY)) { %> checked="checked" <% } %>></td>
-	</tr>
-</table>
-<table>
-	<tr>
-		<td>Start: <input type="text" name="sprinklerstart" value="<%= sprinklerStart %>" placeholder="hh:mm:ss"></td>
-		<td>End: <input type="text" name="sprinklerend" value="<%= sprinklerEnd %>" placeholder="hh:mm:ss"></td>
-	</tr>
-</table>
-</fieldset>
-<input type="submit" id="submit" value="Submit">
+<input type="submit" id="submit" value="Update Schedule">
+<input type="button" id="clear" value="Clear Schedule" onclick="clearcal();">
 </form>
+	</div>
+
 </body>
 </html>

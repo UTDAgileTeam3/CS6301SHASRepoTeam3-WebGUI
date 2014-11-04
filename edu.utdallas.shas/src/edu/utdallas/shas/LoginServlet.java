@@ -96,6 +96,7 @@ public class LoginServlet extends HttpServlet{
 						sess.setAttribute("naturalGasDetectedB", false);
 						sess.setAttribute("hvac", "acOn");
 						sess.setAttribute("hvacTemperature", "75");
+						sess.setAttribute("calendarjson", "[]");
 						RequestDispatcher rd = req.getRequestDispatcher("./SHASHome.jsp");
 						rd.forward(req, resp);
 					}
