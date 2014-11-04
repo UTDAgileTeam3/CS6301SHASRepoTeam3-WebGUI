@@ -28,6 +28,8 @@ String sprinkler1 = (String) request.getSession().getAttribute("sprinklerzone1se
 String sprinkler2 = (String) request.getSession().getAttribute("sprinklerzone2select");
 String sprinkler3 = (String) request.getSession().getAttribute("sprinklerzone3select");
 String sprinkler4 = (String) request.getSession().getAttribute("sprinklerzone4select");
+String hvac = (String) request.getSession().getAttribute("hvac");
+String hvacTemperature = (String) request.getSession().getAttribute("hvacTemperature"); 
 /* if (request.getSession().getAttribute("uname") == null) {
 	 
     response.sendRedirect("login.jsp");
@@ -45,8 +47,9 @@ String sprinkler4 = (String) request.getSession().getAttribute("sprinklerzone4se
        .grayzone   { background-color: gray;} 
     </style>
     <script type="text/javascript">
+    
     $(document).ready(function(){
-   
+  
     	<%if(sprinkler1!=null && (sprinkler1).equalsIgnoreCase("on")){%>
        		    $("#sprinklerzone1").addClass("greenzone");
     		    $("#sprinklerzone1").removeClass("grayzone");
@@ -139,7 +142,13 @@ Connection conn = DriverManager.getConnection(url, username, password);
 				<fieldset style = "width: 300px; height: 50px">
 			        <legend style="font-size: 16px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
 			 		HVAC Status</legend>
-			 	
+			 		<%if(hvac.equalsIgnoreCase("hvacOff")){ %>
+			 		HVAC is currently off.
+			 		<%} else if(hvac.equalsIgnoreCase("heaterOn")){%>
+			 		Heater is currently running and set temperature is: <B> <%=hvacTemperature %> </B>
+			 		<%} else if(hvac.equalsIgnoreCase("acOn")){ %>
+			 		AC is currently running and set temperature is: <B> <%=hvacTemperature %> </B>
+			 		<%} %>
 				</fieldset>
 			</td>
 		</tr>

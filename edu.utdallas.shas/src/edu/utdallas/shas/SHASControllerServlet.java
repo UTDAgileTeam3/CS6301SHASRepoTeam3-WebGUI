@@ -44,6 +44,8 @@ public class SHASControllerServlet extends HttpServlet{
 		setSessionVariable(sess, req, "sprinklerzone2select");
 		setSessionVariable(sess, req, "sprinklerzone3select");
 		setSessionVariable(sess, req, "sprinklerzone4select");
+		setSessionVariable(sess, req, "hvac");
+		setSessionVariable(sess, req, "hvacTemperature");
 		RequestDispatcher rd = req.getRequestDispatcher("./SHASHome.jsp");
 		rd.forward(req, resp);
 	}

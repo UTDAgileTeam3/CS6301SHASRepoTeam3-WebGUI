@@ -38,6 +38,8 @@ function acOrHeaterOnClicked()
 <%
 boolean securityBreached = (Boolean) request.getSession().getAttribute("securityBreached");
 boolean securityEnabled = (Boolean) request.getSession().getAttribute("securityEnabled");
+String hvac = (String) request.getSession().getAttribute("hvac");
+String hvacTemperature = (String) request.getSession().getAttribute("hvacTemperature"); 
 %>
 <form action="./SHASControllerServlet" method="post" onsubmit="return checkSecurity()">
 <table>
@@ -72,14 +74,14 @@ boolean securityEnabled = (Boolean) request.getSession().getAttribute("securityE
 			<table cellspacing="20px">
 				<TR>
 					<TD>
-						<INPUT TYPE="radio" NAME="hvac" id="hvacOff" VALUE="hvacOff" onclick="hvacOffClicked();"><B>OFF</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            			<INPUT TYPE="radio" NAME="hvac" id="acOn" VALUE="acOn" CHECKED onclick="acOrHeaterOnClicked();"><B>AC ON</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            			<INPUT TYPE="radio" NAME="hvac" id="heaterOn" VALUE="heaterOn" onclick="acOrHeaterOnClicked();"><B>Heater ON</B>
+						<INPUT TYPE="radio" NAME="hvac" id="hvacOff" VALUE="hvacOff" onclick="hvacOffClicked();" <%if(hvac!=null && hvac.equalsIgnoreCase("hvacOff")){ %> CHECKED<%} %>><B>OFF</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            			<INPUT TYPE="radio" NAME="hvac" id="acOn" VALUE="acOn" onclick="acOrHeaterOnClicked();" <%if(hvac!=null && hvac.equalsIgnoreCase("acOn")){ %> CHECKED<%} %>><B>AC ON</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            			<INPUT TYPE="radio" NAME="hvac" id="heaterOn" VALUE="heaterOn" onclick="acOrHeaterOnClicked();" <%if(hvac!=null && hvac.equalsIgnoreCase("heaterOn")){ %> CHECKED<%} %>><B>Heater ON</B>
 					</TD>
 				</TR>
 				<TR>
 					<TD>
-						<B> Enter Temperature(in fahrenheit): <input type="text" name="hvacTemperature" id="hvacTemperature" maxlength="2" style="width:30px" value="75"/></B>
+						<B> Enter Temperature(in fahrenheit): <input type="text" name="hvacTemperature" id="hvacTemperature" maxlength="2" style="width:30px" value="<%=hvacTemperature%>" <%if(hvac!=null && hvac.equalsIgnoreCase("hvacOff")){ %> disabled<%} %>/></B>
 					</TD>
 				</TR>
 			</table>
