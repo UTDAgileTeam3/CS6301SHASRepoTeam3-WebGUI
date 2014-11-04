@@ -28,8 +28,10 @@ String sprinkler1 = (String) request.getSession().getAttribute("sprinklerzone1se
 String sprinkler2 = (String) request.getSession().getAttribute("sprinklerzone2select");
 String sprinkler3 = (String) request.getSession().getAttribute("sprinklerzone3select");
 String sprinkler4 = (String) request.getSession().getAttribute("sprinklerzone4select");
-String hvac = (String) request.getSession().getAttribute("hvac");
-String hvacTemperature = (String) request.getSession().getAttribute("hvacTemperature"); 
+
+boolean smokeDetected = (Boolean) request.getSession().getAttribute("smokeDetectedB");
+boolean coDetected = (Boolean) request.getSession().getAttribute("coDetectedB");
+boolean naturalGasDetected = (Boolean) request.getSession().getAttribute("naturalGasDetectedB");
 /* if (request.getSession().getAttribute("uname") == null) {
 	 
     response.sendRedirect("login.jsp");
@@ -44,18 +46,17 @@ String hvacTemperature = (String) request.getSession().getAttribute("hvacTempera
 
 <style type="text/css">
        .greenzone  { background-color: green;}
-       .grayzone   { background-color: gray;} 
+       .grayzone   { background-color: gray;}
+       .redzone		{ background-color: red;}
     </style>
     <script type="text/javascript">
-    
     $(document).ready(function(){
-  
+   
     	<%if(sprinkler1!=null && (sprinkler1).equalsIgnoreCase("on")){%>
        		    $("#sprinklerzone1").addClass("greenzone");
     		    $("#sprinklerzone1").removeClass("grayzone");
         <%}%>
         <%if(sprinkler1!=null &&(sprinkler1).equalsIgnoreCase("off")){%>
-   
     			$("#sprinklerzone1").addClass("grayzone");
     			$("#sprinklerzone1").removeClass("greenzone");
     	<%}%>
@@ -83,9 +84,30 @@ String hvacTemperature = (String) request.getSession().getAttribute("hvacTempera
 				$("#sprinklerzone4").addClass("grayzone");
 				$("#sprinklerzone4").removeClass("greenzone");
 		<%}%>
+		<%if(smokeDetected){%>
+   			$("#smokeAlarm").addClass("redzone");
+			$("#smokeAlarm").removeClass("grayzone");
+    	<%} else {%> $("#smokeAlarm").addClass("grayzone");
+					$("#smokeAlarm").removeClass("redzone");
+    	<%}%>
 
+	    <%if(coDetected){%>
+		    $("#coAlarm").addClass("redzone");
+		    $("#coAlarm").removeClass("grayzone");
+		<%}else {%> $("#coAlarm").addClass("grayzone");
+					$("#coAlarm").removeClass("redzone");
+	    <%}%>
+	
+		<%if(naturalGasDetected){%>
+			$("#naturalGasAlarm").addClass("redzone");
+			$("#naturalGasAlarm").removeClass("grayzone");
+		<%}else {%> $("#naturalGasAlarm").addClass("grayzone");
+					$("#naturalGasAlarm").removeClass("redzone");
+	    <%} if(naturalGasDetected || coDetected || smokeDetected){
+	    %> alert("The max level for the safety alarms has been exceeded. Now notifying fire department and homeowner.");<%}%>
     });
     </script>
+       
     </head>
 <body>
 <%@ include file="./header.jsp" %>
@@ -142,15 +164,7 @@ Connection conn = DriverManager.getConnection(url, username, password);
 				<fieldset style = "width: 300px; height: 50px">
 			        <legend style="font-size: 16px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
 			 		HVAC Status</legend>
-			 		<%if(hvac!=null && hvac.equalsIgnoreCase("hvacOff")){ %>
-			 		HVAC is currently off.
-			 		<%} else if(hvac!=null && hvac.equalsIgnoreCase("heaterOn")){%>
-			 		Heater is currently running and set temperature is: <B> <%=hvacTemperature %> </B>
-			 		<%} else if(hvac!=null && hvac.equalsIgnoreCase("acOn")){ %>
-			 		AC is currently running and set temperature is: <B> <%=hvacTemperature %> </B>
-			 		<%} else {%>
-			 		AC is currently running and set temperature is <B>75</B>
-			 		<%} %>
+			 	
 				</fieldset>
 			</td>
 		</tr>
@@ -163,12 +177,12 @@ Connection conn = DriverManager.getConnection(url, username, password);
 					<tr>
 					<TH id="sprinklerzone1" class="grayzone">Sprinkler Zone1</TH>
 					<TH id="sprinklerzone2" class="grayzone">Sprinkler Zone2</TH>
-					<TR/>
+					</TR>
 			
 					<TR>
 					<TH id="sprinklerzone3" class="grayzone">Sprinkler Zone3</TH>
 					<TH id="sprinklerzone4" class="grayzone">Sprinkler Zone4</TH>
-					
+					</TR>
 				</table>
 				</fieldset>
 			</td>
@@ -176,13 +190,23 @@ Connection conn = DriverManager.getConnection(url, username, password);
 				<fieldset style = "width: 300px; height: 220px">
 			        <legend style="font-size: 16px; font-weight: bold; color: #3300ff; font-family: Georgia, serif;">
 			 		Safety Alarms Status</legend>
-			 	
+			 	<table align="center" border="2px" style="width:200px;height: 200px">
+					<tr>
+						<TH id="smokeAlarm" class="grayzone">Smoke Detected</TH>
+					</TR>
+					<tr>
+						<TH id="coAlarm" class="grayzone">Carbon Monoxide Detected</TH>
+					</TR>
+					<tr>
+						<TH id="naturalGasAlarm" class="grayzone">Natural Gas Detected</TH>
+					</TR>
+				</table>
 				</fieldset>
 			</td>
 		</tr>
 	</table>
 </form>
-The simulation time is <%= simulationTimeString %>.
+The simulation time is <%=simulationTimeString %>.
 <form action="./SimulationStepServlet" method="post">
 	<input type="submit" id="submit" value="Next Event">
 </form>

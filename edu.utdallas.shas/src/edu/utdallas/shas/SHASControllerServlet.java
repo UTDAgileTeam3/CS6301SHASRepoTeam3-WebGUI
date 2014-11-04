@@ -40,6 +40,34 @@ public class SHASControllerServlet extends HttpServlet{
 		else {
 			sess.setAttribute("securityBreached", false);
 		}
+		String smokeDetected = req.getParameter("smokeDetected");
+		if (smokeDetected != null && smokeDetected.equalsIgnoreCase("Yes")) {
+			Boolean b = (Boolean)sess.getAttribute("smokeDetectedB");
+			if (b == null || b == false) {
+				sess.setAttribute("smoBkeDetected", true);
+			}
+		}
+		else {
+			sess.setAttribute("smokeDetectedB", false);
+		}String coDetected = req.getParameter("coDetected");
+		if (coDetected != null && coDetected.equalsIgnoreCase("Yes")) {
+			Boolean b = (Boolean)sess.getAttribute("coDetectedB");
+			if (b == null || b == false) {
+				sess.setAttribute("coDetectedB", true);
+			}
+		}
+		else {
+			sess.setAttribute("coDetectedB", false);
+		}String naturalGasDetected = req.getParameter("naturalGasDetected");
+		if (naturalGasDetected != null && naturalGasDetected.equalsIgnoreCase("Yes")) {
+			Boolean b = (Boolean)sess.getAttribute("naturalGasDetectedB");
+			if (b == null || b == false) {
+				sess.setAttribute("naturalGasDetectedB", true);
+			}
+		}
+		else {
+			sess.setAttribute("naturalGasDetectedB", false);
+		}
 		setSessionVariable(sess, req, "sprinklerzone1select");
 		setSessionVariable(sess, req, "sprinklerzone2select");
 		setSessionVariable(sess, req, "sprinklerzone3select");
