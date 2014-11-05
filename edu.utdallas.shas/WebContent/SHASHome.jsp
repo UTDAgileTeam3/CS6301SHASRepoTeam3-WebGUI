@@ -19,6 +19,7 @@ java.util.Date simulationTime = ((Schedule)request.getSession().getAttribute("sc
 String hvac = (String) request.getSession().getAttribute("hvac");
 String hvacTemperature = (String) request.getSession().getAttribute("hvacTemperature");
 String simulationTimeString = simulationTime.toString();
+String calendarjson = (String) request.getSession().getAttribute("calendarjson");
 long securityAlarmMillis = 0;
 if (securityBreached) {
 	Calendar cal = Calendar.getInstance();
@@ -215,7 +216,7 @@ Connection conn = DriverManager.getConnection(url, username, password);
 		</tr>
 	</table>
 </form>
-The simulation time is <%=simulationTimeString %>.
+The simulation time is <%=simulationTimeString %>. Schedule is <%= calendarjson %>.
 <form action="./SimulationStepServlet" method="post">
 	<input type="submit" id="submit" value="Next Event">
 </form>

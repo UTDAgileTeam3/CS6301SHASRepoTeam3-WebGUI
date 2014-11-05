@@ -15,9 +15,9 @@
 <script src='js/fullcalendar/lib/moment.min.js'></script>
 <script src='js/fullcalendar/lib/jquery-ui.custom.min.js'></script>
 <script src='js/fullcalendar/fullcalendar.js'></script>
-
+<% String calendarjson = (String) request.getSession().getAttribute("calendarjson"); %>
 <script>
-	var calData = [];
+	var calData = <%= calendarjson %>;
 	var calEventSources = [];
 	$(document).ready(function() {
 	
@@ -56,6 +56,8 @@
 				right: 'month,agendaWeek'
 			},
 			editable: true,
+			allDaySlot: false,
+			timezone: 'UTC',
 			droppable: true, // this allows things to be dropped onto the calendar !!!
 			drop: function(date) { // this function is called when something is dropped
 			
@@ -67,7 +69,7 @@
 				
 				// assign it the date that was reported
 				copiedEventObject.start = date;
-
+				copiedEventObject.end = moment(date).add(30, 'minutes');
 				var eventSrc = null;
 				if ($('#one-shot').is(':checked')) {
 					copiedEventObject.type = 'one-shot';
@@ -96,11 +98,30 @@
 				updateRecurObj(event);
 			}
 		});
+		
+		for (var i = 0; i < calData.length; i++) {
+			var ev = calData[i];
+			var eventSrc = null;
+			if (ev.type === 'one-shot') {
+				evnew = $.extend({}, ev);
+				evnew.eventobj = ev;
+				eventSrc = [evnew];
+			}
+			else if (ev.type === 'weekly') {
+				eventSrc = repeatES(ev, 7, 'days');
+			}
+			else if (ev.type === 'monthly') {
+				eventSrc = repeatES(ev, 1, 'month');
+			}
+			$('#calendar').fullCalendar('addEventSource', eventSrc);
+			calEventSources.push(eventSrc);
+		}
 	});
 
 	function updateRecurObj(event) {
 		event.eventobj.start = event.start;
 		event.eventobj.end = event.end;
+		event.eventobj.allDay = event.allDay;
 	}
 	function repeatES(eventobj, time, unit) {
 		return function(start, end, timezone, callback) {
@@ -114,7 +135,7 @@
 				title: eventobj.title,
 				start: moment(loop),
 				eventobj: eventobj,
-				allDay: true
+				allDay: false
 			})
 		    while (!loop.isAfter(end)) {
 		    	loop.add(time, unit);
@@ -122,7 +143,7 @@
 			    	title: eventobj.title,
 		    		start: moment(loop),
 		    		eventobj: eventobj,
-		    		allDay: true
+		    		allDay: false
 		    	});
 			} // for loop
 		
@@ -140,6 +161,7 @@
 		for (var i = 0; i < calEventSources.length; i++) {
 			$('#calendar').fullCalendar('removeEventSource', calEventSources[i]);
 		}
+		calData = [];
 	}
 </script>
 

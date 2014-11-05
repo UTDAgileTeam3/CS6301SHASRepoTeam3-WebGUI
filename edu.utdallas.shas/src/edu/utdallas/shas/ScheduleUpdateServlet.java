@@ -33,7 +33,8 @@ public class ScheduleUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(final HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getSession().setAttribute("calendarjson", request.getParameter("calendarjson"));
+		String calendarjson = request.getParameter("calendarjson");
+		request.getSession().setAttribute("calendarjson", calendarjson);
 		RequestDispatcher rd = request.getRequestDispatcher("./SHASHome.jsp");
 		rd.forward(request, response);
 	}
