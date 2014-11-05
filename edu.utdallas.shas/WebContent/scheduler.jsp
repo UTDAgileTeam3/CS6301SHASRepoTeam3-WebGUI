@@ -73,6 +73,7 @@
 				var eventSrc = null;
 				if ($('#one-shot').is(':checked')) {
 					copiedEventObject.type = 'one-shot';
+					copiedEventObject.allDay = false;
 					copiedEventObject.eventobj = $.extend({}, copiedEventObject);
 					eventSrc = [copiedEventObject];
 					calData.push(copiedEventObject.eventobj);
@@ -134,6 +135,7 @@
 			events.push({
 				title: eventobj.title,
 				start: moment(loop),
+				end: moment(loop).add(30, 'minutes'),
 				eventobj: eventobj,
 				allDay: false
 			})
@@ -142,6 +144,7 @@
 		    	events.push({
 			    	title: eventobj.title,
 		    		start: moment(loop),
+		    		end: moment(loop).add(30, 'minutes'),
 		    		eventobj: eventobj,
 		    		allDay: false
 		    	});
