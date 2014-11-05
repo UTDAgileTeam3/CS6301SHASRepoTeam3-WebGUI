@@ -216,7 +216,7 @@ Connection conn = DriverManager.getConnection(url, username, password);
 		</tr>
 	</table>
 </form>
-The simulation time is <%=simulationTimeString %>. Schedule is <%= calendarjson %>.
+The simulation time is <%=simulationTimeString %>.
 <form action="./SimulationStepServlet" method="post">
 	<input type="submit" id="submit" value="Next Event">
 </form>

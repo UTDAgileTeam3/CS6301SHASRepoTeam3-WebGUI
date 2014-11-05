@@ -7,28 +7,19 @@ import java.util.Date;
 public class ScheduleEvent {
 	private EventCallback startCallback;
 	private EventCallback endCallback;
-	int[] daysOfWeek;
 	private Date startTime;
 	private Date endTime;
+	private ScheduleEventType type;
 	
-	private Date normalizeDate(Date d)
-	{
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(d);
-		cal.set(1970, 0, 1);
-		return cal.getTime();
-	}
-	public ScheduleEvent(int[] daysOfWeek, Date startTime, Date endTime, EventCallback startCallback, EventCallback endCallback) {
-		Date normalizedStartTime = normalizeDate(startTime);
-		Date normalizedEndTime = normalizeDate(endTime);
-		
-		if (startTime.after(endTime))
+	public ScheduleEvent(ScheduleEventType type, Date startTime, Date endTime, EventCallback startCallback, EventCallback endCallback) {
+		if (!startTime.before(endTime))
 			throw new IllegalArgumentException();
+
 		this.startCallback = startCallback;
 		this.endCallback = endCallback;
-		this.daysOfWeek = daysOfWeek;
-		this.startTime = normalizedStartTime;
-		this.endTime = normalizedEndTime;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.type = type;
 	}
 	
 	public EventCallback getStartCallback() {
@@ -39,46 +30,41 @@ public class ScheduleEvent {
 		return endCallback;
 	}
 	
-	private Date getNewDate(Date currentTime, Calendar cal, int dayOfWeek) {
+	private Date getNewDate(Date currentTime, Date time, int unit, int unitcount) {
 		Calendar currcal = Calendar.getInstance();
 		currcal.setTime(currentTime);
 		Calendar newcal = Calendar.getInstance();
-		
-		newcal.setTime(currentTime);
-		newcal.set(Calendar.HOUR_OF_DAY, cal.get(Calendar.HOUR_OF_DAY));
-		newcal.set(Calendar.MINUTE, cal.get(Calendar.MINUTE));
-		newcal.set(Calendar.SECOND, cal.get(Calendar.SECOND));
+		newcal.setTime(time);
 
-		int diff = dayOfWeek - newcal.get(Calendar.DAY_OF_WEEK);
-        if (!(diff >= 0) || !newcal.after(currcal)) {
-            diff += 7;
-        }
-        newcal.add(Calendar.DAY_OF_MONTH, diff);
+		while (!newcal.after(currcal)) {
+			newcal.add(unit, unitcount);
+		}
+
 		return newcal.getTime();
 	}
 	
-	private ArrayList<Date> synthesizeFutureDates(Date currentTime, Date time) {
-		ArrayList<Date> ret = new ArrayList<Date>();
-		Calendar timeCal = Calendar.getInstance();
-		timeCal.setTime(time);
-		
-		for (int i : daysOfWeek) {
-			ret.add(getNewDate(currentTime, timeCal, i));
+	private Date synthesizeFutureDate(Date currentTime, Date time) {
+		switch (type) {
+		case Oneshot:
+			if (time.after(currentTime)) {
+				return time;
+			}
+			return null;
+		case Weekly:
+			return getNewDate(currentTime, time, Calendar.DAY_OF_MONTH, 7);
+		case Monthly:
+			return getNewDate(currentTime, time, Calendar.MONTH, 1);
+		default:
+			return null;
 		}
-		
-		return ret;
 	}
 	
-	public ArrayList<Date> synthesizeFutureStartDates(Date currentTime) {
-		return synthesizeFutureDates(currentTime, startTime);
+	public Date synthesizeFutureStartDate(Date currentTime) {
+		return synthesizeFutureDate(currentTime, startTime);
 	}
 	
-	public ArrayList<Date> synthesizeFutureEndDates(Date currentTime) {
-		return synthesizeFutureDates(currentTime, endTime);
-	}
-	
-	public int[] getDaysOfWeek() {
-		return daysOfWeek;
+	public Date synthesizeFutureEndDate(Date currentTime) {
+		return synthesizeFutureDate(currentTime, endTime);
 	}
 	
 	public Date getStartTime() {
